@@ -1,0 +1,676 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>jQuery LabelSlider</title>
+	<meta charset="utf-8">
+
+	<!-- jQuery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+
+	<!-- Bootstrap 3 -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+
+	<!-- PrismJS Syntax Highlighting -->
+	<style>
+		/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript&plugins=show-language */
+		/*
+		 * prism.js default theme for JavaScript, CSS and HTML
+		 * Based on dabblet (http://dabblet.com)
+		 * @author Lea Verou
+		 */
+
+		code[class*="language-"],
+		pre[class*="language-"] {
+			color: black;
+			text-shadow: 0 1px white;
+			font-family: Consolas, Monaco, 'Andale Mono', monospace;
+			direction: ltr;
+			text-align: left;
+			white-space: pre;
+			word-spacing: normal;
+			word-break: normal;
+			line-height: 1.5;
+
+			-moz-tab-size: 4;
+			-o-tab-size: 4;
+			tab-size: 4;
+
+			-webkit-hyphens: none;
+			-moz-hyphens: none;
+			-ms-hyphens: none;
+			hyphens: none;
+		}
+
+		pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+		code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+			text-shadow: none;
+			background: #b3d4fc;
+		}
+
+		pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+		code[class*="language-"]::selection, code[class*="language-"] ::selection {
+			text-shadow: none;
+			background: #b3d4fc;
+		}
+
+		@media print {
+			code[class*="language-"],
+			pre[class*="language-"] {
+				text-shadow: none;
+			}
+		}
+
+		/* Code blocks */
+		pre[class*="language-"] {
+			padding: 1em;
+			margin: .5em 0;
+			overflow: auto;
+		}
+
+		:not(pre) > code[class*="language-"],
+		pre[class*="language-"] {
+			background: #f5f2f0;
+		}
+
+		/* Inline code */
+		:not(pre) > code[class*="language-"] {
+			padding: .1em;
+			border-radius: .3em;
+		}
+
+		.token.comment,
+		.token.prolog,
+		.token.doctype,
+		.token.cdata {
+			color: slategray;
+		}
+
+		.token.punctuation {
+			color: #999;
+		}
+
+		.namespace {
+			opacity: .7;
+		}
+
+		.token.property,
+		.token.tag,
+		.token.boolean,
+		.token.number,
+		.token.constant,
+		.token.symbol,
+		.token.deleted {
+			color: #905;
+		}
+
+		.token.selector,
+		.token.attr-name,
+		.token.string,
+		.token.char,
+		.token.builtin,
+		.token.inserted {
+			color: #690;
+		}
+
+		.token.operator,
+		.token.entity,
+		.token.url,
+		.language-css .token.string,
+		.style .token.string {
+			color: #a67f59;
+			background: hsla(0, 0%, 100%, .5);
+		}
+
+		.token.atrule,
+		.token.attr-value,
+		.token.keyword {
+			color: #07a;
+		}
+
+		.token.function {
+			color: #DD4A68;
+		}
+
+		.token.regex,
+		.token.important,
+		.token.variable {
+			color: #e90;
+		}
+
+		.token.important {
+			font-weight: bold;
+		}
+
+		.token.entity {
+			cursor: help;
+		}
+
+		pre[class*='language-'] {
+			position: relative;
+		}
+		pre[class*='language-'] > code[data-language] {
+			overflow: scroll;
+			max-height: 28em;
+			display: block;
+		}
+		pre[class*='language-'] > code[data-language]::before {
+			content: attr(data-language);
+			color: black;
+			background-color: #CFCFCF;
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			font-size: 0.9em;
+			border-radius: 0 0 0 5px;
+			padding: 0 0.5em;
+			text-shadow: none;
+		}
+	</style>
+	<script>
+		/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript&plugins=show-language */
+		self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{};var Prism=function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=self.Prism={util:{encode:function(e){return e instanceof n?new n(e.type,t.util.encode(e.content),e.alias):"Array"===t.util.type(e)?e.map(t.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=t.util.clone(e[r]));return a;case"Array":return e.slice()}return e}},languages:{extend:function(e,n){var a=t.util.clone(t.languages[e]);for(var r in n)a[r]=n[r];return a},insertBefore:function(e,n,a,r){r=r||t.languages;var i=r[e],l={};for(var o in i)if(i.hasOwnProperty(o)){if(o==n)for(var s in a)a.hasOwnProperty(s)&&(l[s]=a[s]);l[o]=i[o]}return r[e]=l},DFS:function(e,n,a){for(var r in e)e.hasOwnProperty(r)&&(n.call(e,r,e[r],a||r),"Object"===t.util.type(e[r])?t.languages.DFS(e[r],n):"Array"===t.util.type(e[r])&&t.languages.DFS(e[r],n,r))}},highlightAll:function(e,n){for(var a,r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'),i=0;a=r[i++];)t.highlightElement(a,e===!0,n)},highlightElement:function(a,r,i){for(var l,o,s=a;s&&!e.test(s.className);)s=s.parentNode;if(s&&(l=(s.className.match(e)||[,""])[1],o=t.languages[l]),o){a.className=a.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,s=a.parentNode,/pre/i.test(s.nodeName)&&(s.className=s.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var c=a.textContent;if(c){var g={element:a,language:l,grammar:o,code:c};if(t.hooks.run("before-highlight",g),r&&self.Worker){var u=new Worker(t.filename);u.onmessage=function(e){g.highlightedCode=n.stringify(JSON.parse(e.data),l),t.hooks.run("before-insert",g),g.element.innerHTML=g.highlightedCode,i&&i.call(g.element),t.hooks.run("after-highlight",g)},u.postMessage(JSON.stringify({language:g.language,code:g.code}))}else g.highlightedCode=t.highlight(g.code,g.grammar,g.language),t.hooks.run("before-insert",g),g.element.innerHTML=g.highlightedCode,i&&i.call(a),t.hooks.run("after-highlight",g)}}},highlight:function(e,a,r){var i=t.tokenize(e,a);return n.stringify(t.util.encode(i),r)},tokenize:function(e,n){var a=t.Token,r=[e],i=n.rest;if(i){for(var l in i)n[l]=i[l];delete n.rest}e:for(var l in n)if(n.hasOwnProperty(l)&&n[l]){var o=n[l];o="Array"===t.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var c=o[s],g=c.inside,u=!!c.lookbehind,f=0,h=c.alias;c=c.pattern||c;for(var p=0;p<r.length;p++){var d=r[p];if(r.length>e.length)break e;if(!(d instanceof a)){c.lastIndex=0;var m=c.exec(d);if(m){u&&(f=m[1].length);var y=m.index-1+f,m=m[0].slice(f),v=m.length,k=y+v,b=d.slice(0,y+1),w=d.slice(k+1),N=[p,1];b&&N.push(b);var O=new a(l,g?t.tokenize(m,g):m,h);N.push(O),w&&N.push(w),Array.prototype.splice.apply(r,N)}}}}}return r},hooks:{all:{},add:function(e,n){var a=t.hooks.all;a[e]=a[e]||[],a[e].push(n)},run:function(e,n){var a=t.hooks.all[e];if(a&&a.length)for(var r,i=0;r=a[i++];)r(n)}}},n=t.Token=function(e,t,n){this.type=e,this.content=t,this.alias=n};if(n.stringify=function(e,a,r){if("string"==typeof e)return e;if("[object Array]"==Object.prototype.toString.call(e))return e.map(function(t){return n.stringify(t,a,e)}).join("");var i={type:e.type,content:n.stringify(e.content,a,r),tag:"span",classes:["token",e.type],attributes:{},language:a,parent:r};if("comment"==i.type&&(i.attributes.spellcheck="true"),e.alias){var l="Array"===t.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(i.classes,l)}t.hooks.run("wrap",i);var o="";for(var s in i.attributes)o+=s+'="'+(i.attributes[s]||"")+'"';return"<"+i.tag+' class="'+i.classes.join(" ")+'" '+o+">"+i.content+"</"+i.tag+">"},!self.document)return self.addEventListener?(self.addEventListener("message",function(e){var n=JSON.parse(e.data),a=n.language,r=n.code;self.postMessage(JSON.stringify(t.util.encode(t.tokenize(r,t.languages[a])))),self.close()},!1),self.Prism):self.Prism;var a=document.getElementsByTagName("script");return a=a[a.length-1],a&&(t.filename=a.src,document.addEventListener&&!a.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)),self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism);;
+		Prism.languages.markup={comment:/<!--[\w\W]*?-->/g,prolog:/<\?.+?\?>/,doctype:/<!DOCTYPE.+?>/,cdata:/<!\[CDATA\[[\w\W]*?]]>/i,tag:{pattern:/<\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|[^\s'">=]+))?\s*)*\/?>/gi,inside:{tag:{pattern:/^<\/?[\w:-]+/i,inside:{punctuation:/^<\/?/,namespace:/^[\w-]+?:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,inside:{punctuation:/=|>|"/g}},punctuation:/\/?>/g,"attr-name":{pattern:/[\w:-]+/g,inside:{namespace:/^[\w-]+?:/}}}},entity:/\&#?[\da-z]{1,8};/gi},Prism.hooks.add("wrap",function(t){"entity"===t.type&&(t.attributes.title=t.content.replace(/&amp;/,"&"))});;
+		Prism.languages.css={comment:/\/\*[\w\W]*?\*\//g,atrule:{pattern:/@[\w-]+?.*?(;|(?=\s*{))/gi,inside:{punctuation:/[;:]/g}},url:/url\((["']?).*?\1\)/gi,selector:/[^\{\}\s][^\{\};]*(?=\s*\{)/g,property:/(\b|\B)[\w-]+(?=\s*:)/gi,string:/("|')(\\?.)*?\1/g,important:/\B!important\b/gi,punctuation:/[\{\};:]/g,"function":/[-a-z0-9]+(?=\()/gi},Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{style:{pattern:/<style[\w\W]*?>[\w\W]*?<\/style>/gi,inside:{tag:{pattern:/<style[\w\W]*?>|<\/style>/gi,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css}}});;
+		Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\w\W]*?\*\//g,lookbehind:!0},{pattern:/(^|[^\\:])\/\/.*?(\r?\n|$)/g,lookbehind:!0}],string:/("|')(\\?.)*?\1/g,"class-name":{pattern:/((?:(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/gi,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/g,"boolean":/\b(true|false)\b/g,"function":{pattern:/[a-z0-9_]+\(/gi,inside:{punctuation:/\(/}},number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,operator:/[-+]{1,2}|!|<=?|>=?|={1,3}|&{1,2}|\|?\||\?|\*|\/|\~|\^|\%/g,ignore:/&(lt|gt|amp);/gi,punctuation:/[{}[\];(),.:]/g};;
+		Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|function|get|if|implements|import|in|instanceof|interface|let|new|null|package|private|protected|public|return|set|static|super|switch|this|throw|true|try|typeof|var|void|while|with|yield)\b/g,number:/\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g}),Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,lookbehind:!0}}),Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/<script[\w\W]*?>[\w\W]*?<\/script>/gi,inside:{tag:{pattern:/<script[\w\W]*?>|<\/script>/gi,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript}}});;
+		!function(){if(self.Prism){var a={csharp:"C#",cpp:"C++"};Prism.hooks.add("before-highlight",function(e){var t=a[e.language]||e.language;e.element.setAttribute("data-language",t)})}}();;
+	</script>
+
+
+	<!-- MiniColors -->
+	<script src="jquery.labelslider.min.js"></script>
+
+	<style>
+		dl {
+			margin: 20px 0;
+		}
+		dt {
+			font-size: 120%;
+		}
+		dd {
+			padding: 10px 20px 20px 20px;
+		}
+		dd:last-child {
+			border-bottom: none;
+		}
+		code {
+			color: black;
+			border: none;
+			background: rgba(128, 128, 128, .1);
+		}
+/*
+		pre {
+			background: #f8f8f8;
+			border: none;
+			color: #333;
+			padding: 20px;
+		}
+*/
+		h2 {
+			border-bottom: 1px solid;
+			margin-top: 70px;
+		}
+		h3 {
+			border-bottom: 1px solid #BB3030;
+			color: #BB3030;
+			margin-top: 68px;
+			margin-bottom: 20px;
+		}
+		pre[class*='language-'] > code[data-language] {
+			overflow: auto;
+		}
+		pre {
+			font-size: 14px;
+		}
+		p {
+			margin-bottom: 20px;
+		}
+		h3 + p {
+			margin-top: -9px;
+		}
+		input:not([type=range]) {
+			height: 34px;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.428571429;
+			color: #555;
+			vertical-align: middle;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+			-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s, background .2s;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, background .2s;
+			margin-left: 6px;
+			margin-right: 16px;
+		}
+		input {
+			margin-left: 6px;
+			margin-right: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="row" style="margin: 40px 40px;">
+		<div class="col-12">
+
+
+
+			<!-- Intro -->
+			<div id="intro" class="jumbotron">
+				<h1>jQuery LabelSlider 1.0</h1>
+				<p>
+					Convert labels into Photoshop-style range slider controls for number inputs.
+				</p>
+			</div>
+
+
+
+
+			<!-- Contents -->
+			<h2 id="contents">Contents</h2>
+			<ul>
+				<li><a href="#download">Download</a></li>
+				<li><a href="#demos">Demos</a></li>
+				<li><a href="#api">API</a>
+					<ul>
+						<li><a href="#instantiation">Instantiation</a></li>
+						<li><a href="#settings">Settings</a></li>
+					</ul>
+				</li>
+				<li><a href="#requirements">Requirements</a></li>
+				<li><a href="#compatibility">Compatibility</a></li>
+				<li><a href="#license">License</a></li>
+			</ul>
+
+
+
+
+			<!-- Download -->
+			<h2 id="download">Download</h2>
+			<p>
+				This project is on GitHub. Feel free to post bug reports, feature requests, and code
+				improvements on the official project page.
+			</p>
+			<p>
+				<a href="https://github.com/claviska/jquery-minicolors" class="btn btn-success">Download on GitHub</a>
+			</p>
+
+
+
+
+			<!-- Demos -->
+			<h2 id="demos">Demos</h2>
+			<p>
+				Click and drag the labels next to each input to change the values.
+			</p>
+
+
+			<h3>Nested Input</h3>
+			<label id="demo_nested_input">Label <input></label>
+			<script>$('#demo_nested_input').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_nested_input">Label &lt;input>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_nested_input').labelSlider();</code></pre>
+
+
+			<h3>Associated Input</h3>
+			<label id="demo_associated_input" for="associated_input">Label</label> <input id="associated_input">
+			<script>$('#demo_associated_input').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_associated_input" for="associated_input">Label&lt;/label> &lt;input id="associated_input"></code></pre>
+			<pre><code class="language-javascript">$('#demo_associated_input').labelSlider();</code></pre>
+
+
+			<h3>Multiple Labels</h3>
+			<label class="demo-multiple-labels" for="multiple_labels_input">Label 1</label>
+			<br>
+			<label class="demo-multiple-labels">Label 2 <input id="multiple_labels_input"></label>
+			<script>$('.demo-multiple-labels').labelSlider();</script>
+<pre><code class="language-markup">&lt;label class="demo-multiple-labels" for="multiple_labels_input">Label 1&lt;/label>
+&lt;br>
+&lt;label class="demo-multiple-labels">Label 2 &lt;input id="multiple_labels_input">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('.demo-multiple-labels').labelSlider();</code></pre>
+
+
+			<h3>Nested Input With No Label Tag</h3>
+			<div id="demo_no_label">Label <input></div>
+			<script>$('#demo_no_label').labelSlider();</script>
+			<pre><code class="language-markup">&lt;div id="demo_no_label">Label &lt;input>&lt;/div></code></pre>
+			<pre><code class="language-javascript">$('#demo_no_label').labelSlider();</code></pre>
+
+
+			<h3>Associated Input With No Label Tag</h3>
+			<span id="demo_no_label_associated" for="no_label_associated_input">Label</span> <input id="no_label_associated_input">
+			<script>$('#demo_no_label_associated').labelSlider();</script>
+			<pre><code class="language-markup">&lt;span id="demo_no_label_associated" for="no_label_associated_input">Label&lt;/span> &lt;input id="no_label_associated_input"></code></pre>
+			<pre><code class="language-javascript">$('#demo_no_label_associated').labelSlider();</code></pre>
+
+
+			<h3>Input Type=Number</h3>
+			<label id="demo_number_type">Label <input type="number"></label>
+			<script>$('#demo_number_type').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_number_type">Label &lt;input type="number">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_number_type').labelSlider();</code></pre>
+
+
+			<h3>Input Type=Range</h3>
+			<label id="demo_slider_type">Label <input type="range"></label>
+			<script>$('#demo_slider_type').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_slider_type">Label &lt;input type="range">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_slider_type').labelSlider();</code></pre>
+
+
+			<h3>Input Type=Search</h3>
+			<label id="demo_search_type">Label <input type="search"></label>
+			<script>$('#demo_search_type').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_search_type">Label &lt;input type="search">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_search_type').labelSlider();</code></pre>
+
+
+			<h3>Input Type=Text</h3>
+			<label id="demo_text_type">Label <input type="text"></label>
+			<script>$('#demo_text_type').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_text_type">Label &lt;input type="text">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_text_type').labelSlider();</code></pre>
+
+
+			<h3>Input Type Not Defined</h3>
+			<label id="demo_type_not_defined">Label <input></label>
+			<script>$('#demo_type_not_defined').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_type_not_defined">Label &lt;input>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_type_not_defined').labelSlider();</code></pre>
+
+
+			<h3>Input Type=Date</h3>
+			<label id="demo_date_type">Label <input type="date"></label>
+			<script>$('#demo_date_type').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_date_type">Label &lt;input type="date">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_date_type').labelSlider();</code></pre>
+
+
+			<h3>Meter Control</h3>
+			<label id="demo_meter">Label <meter min="0" max="100" value="95">95 of 100</meter></label>
+			<script>$('#demo_meter').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_meter">Label &lt;meter min="0" max="100" value="95">95 of 100&lt;/meter>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_meter').labelSlider();</code></pre>
+
+
+			<h3>Progress Control</h3>
+			<label id="demo_progress">Label <progress value="60" max="100">60%</progress></label>
+			<script>$('#demo_progress').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_progress">Label &lt;progress value="60" max="100">60%&lt;/progress>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_progress').labelSlider();</code></pre>
+
+
+			<h3>Minimum and Maximum Values</h3>
+			<p>
+				The <code>min</code>, <code>max</code>, and <code>step</code> attributes may also be used on inputs with <code>type=text</code> and other supported input types.
+			</p>
+			<label class="demo-min-max">Integer <input type="number" min="0" max="100"></label>
+			<br>
+			<label class="demo-min-max">Date <input type="date" min="2012-01-01" max="June 20, 2017"></label>
+			<script>$('.demo-min-max').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label class="demo-min-max">Label &lt;input type="number" min="0" max="100">&lt;/label>
+&lt;br>
+&lt;label class="demo-min-max">Date &lt;input type="date" min="2012-01-01" max="June 20, 2017">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('.demo-min-max').labelSlider();</code></pre>
+
+
+			<h3>Negative Numbers</h3>
+			<label id="demo_negative_min_max">Label <input type="number" min="-100" max="-5"></label>
+			<script>$('#demo_negative_min_max').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_negative_min_max">Label &lt;input type="number" min="-100" max="-5">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_negative_min_max').labelSlider();</code></pre>
+
+
+			<h3>Step</h3>
+			<label id="demo_step">Label <input type="number" step="5"></label>
+			<script>$('#demo_step').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_step">Label &lt;input type="number" step="5">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_step').labelSlider();</code></pre>
+
+
+			<h3>Negative Step</h3>
+			<p>
+				Negative <code>step</code> values are not valid for number inputs, however LabelSlider supports them. Negative <code>step</code> values will cause LabelSlider to invert (sliding right will decrease the value and sliding left will increase the value).
+			</p>
+			<label id="demo_negative_step">Label <input type="number" step="-1"></label>
+			<script>$('#demo_negative_step').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_negative_step">Label &lt;input type="number" step="-1">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_negative_step').labelSlider();</code></pre>
+
+
+			<h3>Floating Point Step</h3>
+			<label id="demo_floating_point_step">Label <input type="number" step="0.1"></label>
+			<script>$('#demo_floating_point_step').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_floating_point_step">Label &lt;input type="number" step="0.1">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_floating_point_step').labelSlider();</code></pre>
+
+
+			<h3>Floating Point Numbers</h3>
+			<label class="demo-floating-point-numbers">Label <input type="number" value="15.2613"></label>
+			<br>
+			<label class="demo-floating-point-numbers">Label <input type="number" value="15.2613" step="0.001"></label>
+			<script>$('.demo-floating-point-numbers').labelSlider();</script>
+<pre><code class="language-markup">&lt;label class="demo-floating-point-numbers">Label &lt;input type="number" value="15.2613">&lt;/label>
+&lt;br>
+&lt;label class="demo-floating-point-numbers">Label &lt;input type="number" value="15.2613" step="0.001">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('.demo-floating-point-numbers').labelSlider();</code></pre>
+
+
+			<h3>Input Change Event</h3>
+			<label class="demo-change-event">Hue <input class="hue" type="number" min="0" max="360" value="100"></label>
+			<label class="demo-change-event">Saturation <input class="saturation" type="number" min="0" max="100" value="50"></label>
+			<label class="demo-change-event">Lightness <input class="lightness" type="number" min="0" max="100" value="50"></label>
+			<div id="demo_change_event_swatch" style="display: inline-block; height: 34px; width: 50px; margin-bottom: -13px; margin-left: 20px;"></div>
+			<script>
+				function demoChangeEvent_updateColor() {
+					$('#demo_change_event_swatch').css('background-color', 'hsl(' + $('.demo-change-event .hue').val() + ', ' + $('.demo-change-event .saturation').val() + '%, ' + $('.demo-change-event .lightness').val() + '%)');
+				}
+
+				$('.demo-change-event').labelSlider();
+				$('.demo-change-event INPUT').change(demoChangeEvent_updateColor);
+				demoChangeEvent_updateColor();
+			</script>
+<pre><code class="language-markup">&lt;label id="demo1">Hue &lt;input class="hue" type="number" min="0" max="360" value="100">&lt;/label>
+&lt;label id="demo1">Saturation &lt;input class="saturation" type="number" min="0" max="100" value="50">&lt;/label>
+&lt;label id="demo1">Lightness &lt;input class="lightness" type="number" min="0" max="100" value="50">&lt;/label>
+&lt;div id="demo1_swatch" style="display: inline-block; height: 34px; width: 50px; margin-bottom: -13px; margin-left: 20px;">&lt;/div>
+</code></pre>
+<pre><code class="language-javascript">function demoChangeEvent_updateColor() {
+	$('#demo_change_event_swatch').css('background-color', 'hsl(' + $('.demo-change-event .hue').val() + ', ' + $('.demo-change-event .saturation').val() + '%, ' + $('.demo-change-event .lightness').val() + '%)');
+}
+
+$('.demo-change-event').labelSlider();
+$('.demo-change-event INPUT').change(demoChangeEvent_updateColor);
+demoChangeEvent_updateColor();</code></pre>
+
+
+			<h3>Input Change Event On Stop</h3>
+			<label class="demo-change-event-onstop">Hue <input class="hue" type="number" min="0" max="360" value="100"></label>
+			<label class="demo-change-event-onstop">Saturation <input class="saturation" type="number" min="0" max="100" value="50"></label>
+			<label class="demo-change-event-onstop">Lightness <input class="lightness" type="number" min="0" max="100" value="50"></label>
+			<div id="demo_change_event_onstop_swatch" style="display: inline-block; height: 34px; width: 50px; margin-bottom: -13px; margin-left: 20px;"></div>
+			<script>
+				function demoChangeEventOnStop_updateColor() {
+					$('#demo_change_event_onstop_swatch').css('background-color', 'hsl(' + $('.demo-change-event-onstop .hue').val() + ', ' + $('.demo-change-event-onstop .saturation').val() + '%, ' + $('.demo-change-event-onstop .lightness').val() + '%)');
+				}
+
+				$('.demo-change-event-onstop').labelSlider({ triggerChangeOnStop : true });
+				$('.demo-change-event-onstop INPUT').change(demoChangeEventOnStop_updateColor);
+				demoChangeEventOnStop_updateColor();
+			</script>
+<pre><code class="language-markup">&lt;label id="demo1">Hue &lt;input class="hue" type="number" min="0" max="360" value="100">&lt;/label>
+&lt;label id="demo1">Saturation &lt;input class="saturation" type="number" min="0" max="100" value="50">&lt;/label>
+&lt;label id="demo1">Lightness &lt;input class="lightness" type="number" min="0" max="100" value="50">&lt;/label>
+&lt;div id="demo1_swatch" style="display: inline-block; height: 34px; width: 50px; margin-bottom: -13px; margin-left: 20px;">&lt;/div>
+</code></pre>
+<pre><code class="language-javascript">function demoChangeEventOnStop_updateColor() {
+	$('#demo_change_event_onstop_swatch').css('background-color', 'hsl(' + $('.demo-change-event-onstop .hue').val() + ', ' + $('.demo-change-event-onstop .saturation').val() + '%, ' + $('.demo-change-event-onstop .lightness').val() + '%)');
+}
+
+$('.demo-change-event-onstop').labelSlider({ triggerChangeOnStop : true });
+$('.demo-change-event-onstop INPUT').change(demoChangeEventOnStop_updateColor);
+demoChangeEventOnStop_updateColor();</code></pre>
+
+
+			<h3>Slower Value Changes</h3>
+			<label id="demo_slow_value_changes">Label <input type="number"></label>
+			<script>$('#demo_slow_value_changes').labelSlider({ pixelsPerUnit: 10 });</script>
+			<pre><code class="language-markup">&lt;label id="demo_slow_value_changes">Label &lt;input type="number">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_slow_value_changes').labelSlider({ pixelsPerUnit: 10 });</code></pre>
+
+
+			<h3>Faster Value Changes</h3>
+			<p>
+				The rate of value change can be increased by setting <code>pixelsPerUnit</code> to a number less than <code>1</code> and greater or equal to <code>0.01</code>. This basically has the effect of setting the input's <code>step</code> attribute to a number greater than <code>1</code>. The usefulness of it comes when used in combination with a floating point <code>step</code> value.
+			</p>
+			<label id="demo_fast_value_changes">Label <input type="number" step="0.001"></label>
+			<script>$('#demo_fast_value_changes').labelSlider({ pixelsPerUnit: 0.05 });</script>
+			<pre><code class="language-markup">&lt;label id="demo_fast_value_changes">Label &lt;input type="number" step="0.001">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_fast_value_changes').labelSlider({ pixelsPerUnit: 0.05 });</code></pre>
+
+
+			<h3>Validation Disabled</h3>
+			<p>
+				Notice that you can type any character into the input. Disabling LabelSlider's validation is useful when you are handling validation yourself.
+			</p>
+			<label id="demo_validation_disabled">Label <input></label>
+			<script>$('#demo_validation_disabled').labelSlider({ validate: false });</script>
+			<pre><code class="language-markup">&lt;label id="demo_validation_disabled">Label &lt;input>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_validation_disabled').labelSlider({ validate: false });</code></pre>
+
+
+			<h3>Input Value Initialization Disabled</h3>
+			<label id="demo_value_init_disabled">Label <input></label>
+			<script>$('#demo_value_init_disabled').labelSlider({ initValue: false });</script>
+			<pre><code class="language-markup">&lt;label id="demo_value_init_disabled">Label &lt;input>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_value_init_disabled').labelSlider({ initValue: false });</code></pre>
+
+
+			<h3>Disabled Input</h3>
+			<label id="demo_disabled_input">Label <input disabled="disabled"></label>
+			<script>$('#demo_disabled_input').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_disabled_input">Label &lt;input disabled="disabled">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_disabled_input').labelSlider();</code></pre>
+
+
+			<h3>Read-Only Input</h3>
+			<label id="demo_readonly_input">Label <input readonly="readonly"></label>
+			<script>$('#demo_readonly_input').labelSlider();</script>
+			<pre><code class="language-markup">&lt;label id="demo_readonly_input">Label &lt;input readonly="readonly">&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_readonly_input').labelSlider();</code></pre>
+
+
+			<h3>CSS Class Applied When Sliding</h3>
+			<p>
+				The CSS class <code>label-slider-sliding</code> is added to the <code>input</code> while the user is sliding the label control.
+			</p>
+			<label id="demo_css_sliding_class">Label <input></label>
+			<style>#demo_css_sliding_class INPUT.label-slider-sliding { background: #FBF493; }</style>
+			<script>$('#demo_css_sliding_class').labelSlider();</script>
+			<pre><code class="language-css">#demo_css_sliding_class INPUT.label-slider-sliding
+{
+	background: #FBF493;
+}</code></pre>
+			<pre><code class="language-markup">&lt;label id="demo_css_sliding_class">Label &lt;input>&lt;/label></code></pre>
+			<pre><code class="language-javascript">$('#demo_css_sliding_class').labelSlider();</code></pre>
+
+
+			<h3>Declarative Instantiation Using CSS Class=label-slider</h3>
+			<label class="label-slider">Label <input></label>
+			<pre><code class="language-markup">&lt;label class="label-slider">Label &lt;input>&lt;/label></code></pre>
+
+
+
+
+
+
+			<!-- API -->
+			<h2 id="api">API</h2>
+
+			<!-- Instantiation -->
+			<h3 id="instantiation">Instantiation</h3>
+			<p style="margin: 20px 0 0;">
+				Instantiate like any other jQuery plugin:
+			</p>
+			<pre><code class="language-javascript">$('LABEL').labelSlider(settings);</code></pre>
+			<p style="margin: 20px 0 0;">
+				Or you may add the class <code>label-slider</code>:
+			</p>
+			<pre><code class="language-markup">&lt;label class="label-slider">Label &lt;input>&lt;/label></code></pre>
+
+			<!-- Settings -->
+			<h3 id="settings">Settings</h3>
+
+
+
+			<dl>
+				<dt>initValue <code>(default: true)</code></dt>
+				<dd>
+					<p>
+						By default, LabelSlider will initialize the value of inputs whose values are not defined. Set to <code>false</code> to disable this feature.
+					</p>
+				</dd>
+
+				<dt>pixelsPerUnit <code>(default: 1)</code></dt>
+				<dd>
+					<p>
+						The (non-negative) number of pixels the mouse must travel before the input is incremented or decremented. Anything above <code>1</code> will cause the numbers to change more slowly. Anything less than <code>1</code> like <code>0.5</code> will cause the numbers to change faster.
+					</p>
+				</dd>
+
+				<dt>triggerChangeOnStop <code>(default: false)</code></dt>
+				<dd>
+					<p>
+						Set to <code>true</code> to wait until the user stops sliding before firing the change event for the input. Set to <code>false</code> to fire the input's change event every time the number is incremented or decremented.
+					</p>
+				</dd>
+
+				<dt>validate <code>(default: true)</code></dt>
+				<dd>
+					<p>
+						Set to <code>false</code> to disable validation on the input. This is useful if you have your own validation code or if you're using another plugin for validation. When set to <code>true</code> only numbers are allowed to be entered into the input.
+					</p>
+				</dd>
+
+			</dl>
+
+			
+
+			<h2 id="requirements">Requirements</h2>
+			<p>
+				<a href="http://jquery.com/">jQuery</a> and <a href="http://jqueryui.com/">jQuery UI</a> (draggable component) are both required.
+			</p>
+
+			
+
+			<h2 id="compatibility">Compatibility</h2>
+			<p>
+				Tested on IE6+, Chrome, Firefox, Safari, Opera.
+			</p>
+
+			
+			
+			<h2 id="license">License</h2>
+			<p>
+				Licensed under the <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU GENERAL PUBLIC LICENSE</a>
+			</p>
+			<p>
+				&copy; Copyright 2014 <a href="http://halfduplex.us/">Corey Meredith</a>
+			</p>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
