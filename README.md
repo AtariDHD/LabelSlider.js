@@ -2,7 +2,7 @@
 A jQuery plugin for converting form labels into Photoshop-style range slider controls for numeric and date inputs.
 
 LabelSlider adds the power and conveniance of clicking and dragging HTML form labels to adjust values to your web pages.
-[Check out the demo page](http://)
+[Check out the demo page](http://ifugu.github.io/LabelSlider.js/demo.html)
 
 ## How Do I Use It?
 Include jQuery 1.x, jQuery UI 1.x and LabelSlider.js on your page and add the class, label-slider, to your labels.
